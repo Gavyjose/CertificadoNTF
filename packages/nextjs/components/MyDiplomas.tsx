@@ -19,7 +19,7 @@ export const MyDiplomas = () => {
   const { data: mintedEvents, isLoading: isEventsLoading } = useScaffoldEventHistory({
     contractName: "DiplomaNFT",
     eventName: "DiplomaMinted",
-    fromBlock: 0n,
+    fromBlock: 10000000n,
     filters: { recipient: connectedAddress },
     watch: true,
   });
@@ -57,6 +57,12 @@ export const MyDiplomas = () => {
               falsificarlo.
             </p>
           </div>
+          {balance && balance > 0n && (
+            <div className="mt-4 text-xs opacity-50">
+              Nota: Tienes un balance de {balance.toString()} pero no pudimos recuperar el historial de eventos. Esto
+              puede deberse a la latencia de la red Sepolia. Por favor recarga en unos momentos.
+            </div>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
