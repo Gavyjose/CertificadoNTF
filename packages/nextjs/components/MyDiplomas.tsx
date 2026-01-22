@@ -16,13 +16,19 @@ export const MyDiplomas = () => {
   });
 
   // Obtenemos el historial de diplomas emitidos a esta dirección
-  const { data: mintedEvents, isLoading: isEventsLoading } = useScaffoldEventHistory({
+  // Obtenemos el historial de diplomas (buscamos todos y filtramos localmente para mayor fiabilidad)
+  const { data: allMintedEvents, isLoading: isEventsLoading } = useScaffoldEventHistory({
     contractName: "DiplomaNFT",
     eventName: "DiplomaMinted",
-    fromBlock: 10000000n,
-    filters: { recipient: connectedAddress },
+    fromBlock: 10099000n, // Cerca del bloque de despliegue real
     watch: true,
+    blocksBatchSize: 100000, // Lotes más grandes para mayor velocidad en redes públicas
   });
+
+  // Filtramos localmente por el usuario conectado
+  const mintedEvents = allMintedEvents?.filter(
+    event => event.args.recipient?.toLowerCase() === connectedAddress?.toLowerCase(),
+  );
 
   // En una DApp real, usaríamos un indexador (Subgraph) para obtener la lista de IDs.
   // Para este ejemplo didáctico, podemos intentar "adivinar" o simplemente mostrar
