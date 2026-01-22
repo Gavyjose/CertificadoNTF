@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
 import { MintDiploma } from "~~/components/MintDiploma";
 import { MyDiplomas } from "~~/components/MyDiplomas";
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
   const [activeTab, setActiveTab] = useState<"mint" | "gallery">("mint");
 
   return (
@@ -19,8 +17,8 @@ const Home: NextPage = () => {
             Academia de <span className="text-primary italic">Diplomas NFT</span>
           </h1>
           <p className="text-lg opacity-80 max-w-2xl leading-relaxed">
-            Certifica logros educativos de forma inmutable. Aprende cómo los NFTs
-            están revolucionando la acreditación académica en la era Web3.
+            Certifica logros educativos de forma inmutable. Aprende cómo los NFTs están revolucionando la acreditación
+            académica en la era Web3.
           </p>
 
           <div className="mt-8 flex gap-4">
@@ -58,10 +56,25 @@ const Home: NextPage = () => {
           {activeTab === "mint" ? (
             <div className="space-y-8">
               <div className="alert bg-secondary border-primary/20 shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-primary shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="stroke-primary shrink-0 w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
                 <div className="text-sm">
                   <h3 className="font-bold">Guía para Emisores:</h3>
-                  <p>Como administrador, puedes emitir certificados únicos que viven para siempre en la blockchain de Sepolia.</p>
+                  <p>
+                    Como administrador, puedes emitir certificados únicos que viven para siempre en la blockchain de
+                    Sepolia.
+                  </p>
                 </div>
               </div>
               <MintDiploma />
