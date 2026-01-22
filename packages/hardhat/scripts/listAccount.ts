@@ -7,19 +7,25 @@ import password from "@inquirer/password";
 
 async function main() {
   const encryptedKey = process.env.DEPLOYER_PRIVATE_KEY_ENCRYPTED;
+  const rawPrivateKey = process.env.PRIVATE_KEY;
 
-  if (!encryptedKey) {
+  if (!encryptedKey && !rawPrivateKey) {
     console.log("🚫️ You don't have a deployer account. Run `yarn generate` or `yarn account:import` first");
     return;
   }
 
-  const pass = await password({ message: "Enter your password to decrypt the private key:" });
   let wallet: Wallet;
-  try {
-    wallet = (await Wallet.fromEncryptedJson(encryptedKey, pass)) as Wallet;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
-    console.log("❌ Failed to decrypt private key. Wrong password?");
+  if (rawPrivateKey) {
+    wallet = new Wallet(rawPrivateKey);
+  } else if (encryptedKey) {
+    const pass = await password({ message: "Enter your password to decrypt the private key:" });
+    try {
+      wallet = (await Wallet.fromEncryptedJson(encryptedKey, pass)) as Wallet;
+    } catch {
+      console.log("❌ Failed to decrypt private key. Wrong password?");
+      return;
+    }
+  } else {
     return;
   }
 
