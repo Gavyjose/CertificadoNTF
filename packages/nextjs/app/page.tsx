@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import type { NextPage } from "next";
 import { MintDiploma } from "~~/components/MintDiploma";
 import { MyDiplomas } from "~~/components/MyDiplomas";
 
-const Home: NextPage = () => {
+const HomeContent = () => {
   const [activeTab, setActiveTab] = useState<"mint" | "gallery">("mint");
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab === "gallery") {
+      setActiveTab("gallery");
+    } else if (tab === "mint") {
+      setActiveTab("mint");
+    }
+  }, [searchParams]);
 
   return (
     <div className="flex-grow bg-base-100">
@@ -85,6 +96,20 @@ const Home: NextPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Home: NextPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center py-20">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 };
 
