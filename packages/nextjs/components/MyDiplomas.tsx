@@ -3,7 +3,7 @@
 import React from "react";
 import { DiplomaSVG } from "./DiplomaSVG";
 import { useAccount } from "wagmi";
-import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldEventHistory, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 export const MyDiplomas = () => {
   const { address: connectedAddress } = useAccount();
@@ -13,6 +13,15 @@ export const MyDiplomas = () => {
     contractName: "DiplomaNFT",
     functionName: "balanceOf",
     args: [connectedAddress],
+  });
+
+  // Obtenemos el historial de diplomas emitidos a esta dirección
+  const { data: mintedEvents, isLoading: isEventsLoading } = useScaffoldEventHistory({
+    contractName: "DiplomaNFT",
+    eventName: "DiplomaMinted",
+    fromBlock: 0n,
+    filters: { recipient: connectedAddress },
+    watch: true,
   });
 
   // En una DApp real, usaríamos un indexador (Subgraph) para obtener la lista de IDs.
@@ -29,7 +38,11 @@ export const MyDiplomas = () => {
         <div className="badge badge-primary p-4 gap-2">Balance: {balance?.toString() || "0"} NFTs</div>
       </div>
 
-      {!balance || balance.toString() === "0" ? (
+      {isEventsLoading ? (
+        <div className="flex justify-center py-20">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      ) : !mintedEvents || mintedEvents.length === 0 ? (
         <div className="bg-secondary p-12 rounded-3xl text-center border-2 border-dashed border-primary/30">
           <div className="text-6xl mb-4">📭</div>
           <h3 className="text-xl font-bold mb-2">Aún no tienes diplomas</h3>
@@ -47,26 +60,34 @@ export const MyDiplomas = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {/* Aquí iteraríamos sobre los IDs de los diplomas si tuviéramos la lista */}
-          {/* Como demostración, mostramos un placeholder con los datos del contrato */}
-          <div className="card bg-base-100 shadow-xl overflow-hidden border border-primary/20 hover:border-primary/50 transition-all group">
-            <div className="p-2 bg-secondary group-hover:bg-primary/10 transition-colors">
-              <DiplomaSVG
-                name="Gavy Jose Colmenares"
-                institution="Blockchain Academy"
-                course="Maestría en Blockchain"
-                date="20 de enero de 2026"
-              />
-            </div>
-            <div className="card-body p-4">
-              <h3 className="font-bold text-lg">Maestría en Blockchain</h3>
-              <p className="text-sm opacity-70">Emitido por: Blockchain Academy</p>
-              <div className="card-actions justify-end mt-2">
-                <button className="btn btn-primary btn-sm btn-outline">Ver en Explorer</button>
-                <button className="btn btn-primary btn-sm">Compartir</button>
+          {mintedEvents.map(event => (
+            <div
+              key={event.transactionHash}
+              className="card bg-base-100 shadow-xl overflow-hidden border border-primary/20 hover:border-primary/50 transition-all group"
+            >
+              <div className="p-2 bg-secondary group-hover:bg-primary/10 transition-colors">
+                <DiplomaSVG
+                  name={event.args.name || ""}
+                  institution={event.args.institution || ""}
+                  course={event.args.course || ""}
+                />
+              </div>
+              <div className="card-body p-4">
+                <h3 className="font-bold text-lg">{event.args.course}</h3>
+                <p className="text-sm opacity-70">Emitido por: {event.args.institution}</p>
+                <div className="card-actions justify-end mt-2">
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary btn-sm btn-outline"
+                  >
+                    Ver en Explorer
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       )}
     </div>
