@@ -9,6 +9,12 @@ Esta es una DApp educativa completa construida sobre **Scaffold-ETH 2**, diseña
 - **Enfoque Didáctico**: Explicaciones integradas sobre conceptos Web3 (Gas, Wallet, Inmutabilidad, NFT).
 - **Diseño Premium**: Interfaz oscura con acentos verdes, totalmente responsiva y optimizada.
 
+## 🌐 Enlaces del Proyecto
+
+- **Sitio Web (Producción)**: [https://certificado-ntf-nextjs.vercel.app](https://certificado-ntf-nextjs.vercel.app)
+- **Enlace Directo para Estudiantes**: [Acceso a Galería Personal](https://certificado-ntf-nextjs.vercel.app/?tab=gallery)
+- **Contrato en Sepolia**: [0x50a3DAd46F52D5cDAbD8c5D4245e75258aBDFa3d](https://sepolia.etherscan.io/address/0x50a3DAd46F52D5cDAbD8c5D4245e75258aBDFa3d)
+
 ## 🛠️ Tecnologías Utilizadas
 - **Blockchain**: Solidity, Hardhat, OpenZeppelin (ERC-721).
 - **Frontend**: Next.js, Tailwind CSS, DaisyUI.
