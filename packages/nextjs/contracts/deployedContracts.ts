@@ -836,7 +836,7 @@ const deployedContracts = {
   },
   11155111: {
     DiplomaNFT: {
-      address: "0x50a3DAd46F52D5cDAbD8c5D4245e75258aBDFa3d",
+      address: "0x92bD36a23879FA9A2067cB79a551453edD121169",
       abi: [
         {
           inputs: [
@@ -1516,10 +1516,10 @@ const deployedContracts = {
         renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
         transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
       },
-      deployedOnBlock: 10099764,
+      deployedOnBlock: 10136958,
     },
     YourContract: {
-      address: "0xd7afFa408eb45d2220e1dD73ae0e6858526ACe87",
+      address: "0x5cFBFe02D12C323bA9cEe646874134a06dB84211",
       abi: [
         {
           inputs: [
@@ -1660,7 +1660,7 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 10099763,
+      deployedOnBlock: 10136957,
     },
   },
 } as const;
