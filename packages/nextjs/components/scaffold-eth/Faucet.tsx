@@ -34,7 +34,7 @@ export const Faucet = () => {
   useEffect(() => {
     const getFaucetAddress = async () => {
       try {
-        if (ConnectedChain?.id !== hardhat.id) {
+        if (ConnectedChain?.id !== hardhat.id || targetNetwork.id !== hardhat.id) {
           return;
         }
         const accounts = await localWalletClient.getAddresses();
@@ -56,7 +56,7 @@ export const Faucet = () => {
       }
     };
     getFaucetAddress();
-  }, [ConnectedChain?.id]);
+  }, [ConnectedChain?.id, targetNetwork.id]);
 
   const sendETH = async () => {
     if (!faucetAddress || !inputAddress) {
@@ -79,7 +79,7 @@ export const Faucet = () => {
   };
 
   // Render only on local chain
-  if (ConnectedChain?.id !== hardhat.id) {
+  if (ConnectedChain?.id !== hardhat.id || targetNetwork.id !== hardhat.id) {
     return null;
   }
 
