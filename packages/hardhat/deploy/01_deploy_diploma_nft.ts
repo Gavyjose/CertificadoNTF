@@ -15,7 +15,7 @@ const deployDiplomaNFT: DeployFunction = async function (hre: HardhatRuntimeEnvi
   await deploy("DiplomaNFT", {
     from: deployer,
     // Contract constructor arguments (initialOwner)
-    args: [deployer],
+    args: ["0x0645198991a83031e59B5A5889519b4Cb0D993ad"],
     log: true,
     autoMine: true,
   });
