@@ -32,6 +32,9 @@ export const DiplomaSVG: React.FC<DiplomaProps> = ({ name, institution, course, 
       <rect x="20" y="20" width="760" height="560" stroke="#10B981" strokeWidth="4" fill="none" />
       <rect x="30" y="30" width="740" height="540" stroke="#34D399" strokeWidth="1" fill="none" opacity="0.5" />
 
+      {/* Logo UPTA */}
+      <image href="/logoupta.ico" x="40" y="40" height="100" width="100" />
+
       {/* Title */}
       <text
         x="400"
