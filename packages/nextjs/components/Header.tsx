@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { hardhat } from "viem/chains";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
@@ -59,6 +60,8 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const { targetNetwork } = useTargetNetwork();
   const isLocalNetwork = targetNetwork.id === hardhat.id;
+  const searchParams = useSearchParams();
+  const isStudentView = searchParams.get("view") === "student";
 
   const burgerMenuRef = useRef<HTMLDetailsElement>(null);
   useOutsideClick(burgerMenuRef, () => {
@@ -78,7 +81,7 @@ export const Header = () => {
               burgerMenuRef?.current?.removeAttribute("open");
             }}
           >
-            <HeaderMenuLinks />
+            {!isStudentView && <HeaderMenuLinks />}
           </ul>
         </details>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
@@ -91,7 +94,7 @@ export const Header = () => {
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
-          <HeaderMenuLinks />
+          {!isStudentView && <HeaderMenuLinks />}
         </ul>
       </div>
       <div className="navbar-end grow mr-4">

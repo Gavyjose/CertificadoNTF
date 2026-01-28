@@ -10,15 +10,20 @@ import { MyDiplomas } from "~~/components/MyDiplomas";
 const HomeContent = () => {
   const [activeTab, setActiveTab] = useState<"mint" | "gallery" | "all">("mint");
   const searchParams = useSearchParams();
+  const isStudentView = searchParams.get("view") === "student";
 
   useEffect(() => {
+    if (isStudentView) {
+      setActiveTab("gallery");
+      return;
+    }
     const tab = searchParams.get("tab");
     if (tab === "gallery") {
       setActiveTab("gallery");
     } else if (tab === "mint") {
       setActiveTab("mint");
     }
-  }, [searchParams]);
+  }, [searchParams, isStudentView]);
 
   return (
     <div className="flex-grow bg-base-100">
@@ -38,26 +43,28 @@ const HomeContent = () => {
 
       <div className="max-w-7xl mx-auto mt-8 px-4 pb-20">
         {/* Navigation Tabs */}
-        <div className="tabs tabs-boxed bg-base-300 w-fit mx-auto mb-12 p-1.5 rounded-2xl border border-primary/5">
-          <button
-            className={`tab tab-lg px-8 rounded-xl transition-all ${activeTab === "mint" ? "tab-active bg-primary text-primary-content" : "hover:bg-primary/10"}`}
-            onClick={() => setActiveTab("mint")}
-          >
-            🏫 Emitir Diploma
-          </button>
-          <button
-            className={`tab tab-lg px-8 rounded-xl transition-all ${activeTab === "gallery" ? "tab-active bg-primary text-primary-content" : "hover:bg-primary/10"}`}
-            onClick={() => setActiveTab("gallery")}
-          >
-            🎓 Mis Diplomas
-          </button>
-          <button
-            className={`tab tab-lg px-8 rounded-xl transition-all ${activeTab === "all" ? "tab-active bg-primary text-primary-content" : "hover:bg-primary/10"}`}
-            onClick={() => setActiveTab("all")}
-          >
-            📜 Certificados Emitidos
-          </button>
-        </div>
+        {!isStudentView && (
+          <div className="tabs tabs-boxed bg-base-300 w-fit mx-auto mb-12 p-1.5 rounded-2xl border border-primary/5">
+            <button
+              className={`tab tab-lg px-8 rounded-xl transition-all ${activeTab === "mint" ? "tab-active bg-primary text-primary-content" : "hover:bg-primary/10"}`}
+              onClick={() => setActiveTab("mint")}
+            >
+              🏫 Emitir Diploma
+            </button>
+            <button
+              className={`tab tab-lg px-8 rounded-xl transition-all ${activeTab === "gallery" ? "tab-active bg-primary text-primary-content" : "hover:bg-primary/10"}`}
+              onClick={() => setActiveTab("gallery")}
+            >
+              🎓 Mis Diplomas
+            </button>
+            <button
+              className={`tab tab-lg px-8 rounded-xl transition-all ${activeTab === "all" ? "tab-active bg-primary text-primary-content" : "hover:bg-primary/10"}`}
+              onClick={() => setActiveTab("all")}
+            >
+              📜 Certificados Emitidos
+            </button>
+          </div>
+        )}
 
         {/* Content Section */}
         <div className="animate-in fade-in duration-500">
