@@ -34,10 +34,6 @@ const HomeContent = () => {
             Universidad Politecnica Territorial de Aragua{" "}
             <span className="text-primary italic">&quot;Federico Brito Figueroa&quot;</span>
           </h1>
-          <p className="text-lg opacity-80 max-w-2xl leading-relaxed">
-            Certifica logros educativos de forma inmutable. Aprende cómo los NFTs están revolucionando la acreditación
-            académica en la era Web3.
-          </p>
         </div>
       </div>
 
